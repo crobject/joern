@@ -82,6 +82,7 @@ public class PHPCGFactory {
 				
 				// if call identifier is fully qualified,
 				// just look for the function's definition right away
+                System.out.println(callIdentifier.getFlags());
 				if( callIdentifier.getFlags().contains( PHPCSVNodeTypes.FLAG_NAME_FQ)) {
 					String functionKey = callIdentifier.getNameChild().getEscapedCodeStr();
 					addCallEdgeIfDefinitionKnown(cg, functionDefs, functionCall, functionKey);
@@ -98,6 +99,7 @@ public class PHPCGFactory {
 					if( !callIdentifier.getEnclosingNamespace().isEmpty()) {
 						String functionKey = callIdentifier.getEnclosingNamespace() + "\\"
 								+ callIdentifier.getNameChild().getEscapedCodeStr();
+                        System.out.println(functionKey );
 						found = addCallEdgeIfDefinitionKnown(cg, functionDefs, functionCall, functionKey);
 					}
 					
@@ -105,6 +107,7 @@ public class PHPCGFactory {
 					// try to find the function in the global namespace
 					if( !found) {
 						String functionKey = callIdentifier.getNameChild().getEscapedCodeStr();
+                        System.out.println(functionDefs.keySet());
 						addCallEdgeIfDefinitionKnown(cg, functionDefs, functionCall, functionKey);
 					}
 				}
@@ -287,6 +290,9 @@ public class PHPCGFactory {
 		// check whether we know the called function
 		if( defSet.containsKey(functionKey))		
 			ret = addCallEdge( cg, functionCall, defSet.get(functionKey));
+        
+        System.out.println(ret);
+        System.out.println(functionKey);
 		
 		return ret;
 	}
@@ -421,6 +427,7 @@ public class PHPCGFactory {
 						" and id " + functionDef.getNodeId() + ")");
 			}
 			
+            System.out.println("key = " + functionKey);
 			return functionDefs.put( functionKey, functionDef);
 		}		
 	}

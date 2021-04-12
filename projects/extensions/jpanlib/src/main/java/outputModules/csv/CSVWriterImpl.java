@@ -93,7 +93,7 @@ public abstract class CSVWriterImpl implements WriterImpl {
 
 	protected void writeEdgePropertyNames()
 	{
-		String joined = "start" + SEPARATOR + "end" + SEPARATOR + "type"
+		String joined = ":START_ID" + SEPARATOR + ":END_ID" + SEPARATOR + ":TYPE"
 				+ SEPARATOR + StringUtils.join(edgeProperties, SEPARATOR);
 		edgeWriter.println(joined);
 	}

@@ -24,29 +24,30 @@ allprojects {
 
 task joernTools(type: Exec) {
     workingDir './python/joern-tools'
-    commandLine 'python3', 'setup.py', 'install', '--user'
+    commandLine 'python3', 'setup.py', 'install', '--user', '--prefix='
 }
 
 // Copy extensions and plugins into Octopus plugin directory
 
-task deploy(dependsOn: build) << {
-    copy {
-        into "projects/octopus/plugins"
-        from fileTree("projects/plugins").files
-        include '**/*.jar'
+task deploy(dependsOn: build)  {
+    doLast {
+        copy {
+            into "projects/octopus/plugins"
+            from fileTree("projects/plugins").files
+            include '**/*.jar'
+            exclude '**/*-plain.jar'
+            includeEmptyDirs = false
+        }
+
+        copy {
+            into "projects/octopus/extensions"
+            from fileTree("projects/extensions").files
+            include '**/*.jar'
+        exclude '**/lucene-core-3.6.2.jar'
         exclude '**/*-plain.jar'
-        includeEmptyDirs = false
+            includeEmptyDirs = false
+        }
     }
-
-    copy {
-        into "projects/octopus/extensions"
-        from fileTree("projects/extensions").files
-        include '**/*.jar'
-	exclude '**/lucene-core-3.6.2.jar'
-	exclude '**/*-plain.jar'
-        includeEmptyDirs = false
-    }
-
 }
 
 dependencies{

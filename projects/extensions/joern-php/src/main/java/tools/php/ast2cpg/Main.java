@@ -74,7 +74,6 @@ public class Main {
 
 			PHPCGFactory.addFunctionDef( rootnode);
 
-            System.out.println(rootnode);
 			CFG cfg = ast2cfgConverter.convert(rootnode);
 			csvCFGExporter.writeCFGEdges(cfg);
 
@@ -87,8 +86,6 @@ public class Main {
 		// now that we wrapped up all functions, let's finish off with the call graph
 		CG cg = PHPCGFactory.newInstance();
 		csvCGExporter.writeCGEdges(cg);
-        System.out.println(cg.getEdges());
-
 
 		csvWriter.closeEdgeFile();
 	}
